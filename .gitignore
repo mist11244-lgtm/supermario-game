@@ -6,3 +6,5 @@ node_modules/
 .sites-checkout*/
 tests/github-*.mjs
 .vercel/
+.vercel
+.env*

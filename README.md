@@ -1,6 +1,6 @@
 # SNOWBELL CUP — 마리오 윈터 카트
 
-[바로 플레이](https://mist11244-lgtm.github.io/supermario-game/) · [Sites에서 플레이](https://snowbell-mario-kart-1117.workspace-073591.chatgpt.site)
+[Vercel에서 바로 플레이](https://supermario-game.vercel.app) · [GitHub Pages](https://mist11244-lgtm.github.io/supermario-game/) · [Sites에서 플레이](https://snowbell-mario-kart-1117.workspace-073591.chatgpt.site)
 
 HTML, CSS, JavaScript와 Canvas 2D로 만든 크리스마스 아이스 카트 레이싱 팬 게임입니다.
 
@@ -39,4 +39,11 @@ HTML, CSS, JavaScript와 Canvas 2D로 만든 크리스마스 아이스 카트 �
 
 Nintendo와 무관한 비공식 팬 프로젝트입니다. 캐릭터 이름은 각 권리자에게 귀속됩니다. 그래픽은 SVG와 Canvas로 직접 그렸고, 오디오는 브라우저에서 합성합니다. 상용 음원과 게임 원본 리소스는 포함하지 않습니다.
 
+
+
+## Vercel
+
+프로덕션: https://supermario-game.vercel.app
+
+vercel.json에서 dist 폴더를 정적 배포합니다. CLI 재배포 명령은 npx vercel deploy --prod 입니다.
 
