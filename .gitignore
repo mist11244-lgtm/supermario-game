@@ -5,3 +5,4 @@ node_modules/
 .sites-runtime/
 .sites-checkout*/
 tests/github-*.mjs
+.vercel/
