@@ -4,14 +4,14 @@ const assert = require('node:assert/strict');
 function harness(){
  const handlers={}, elements=new Map(); let raf,time=0;
  const context=new Proxy({}, {get:(target,key)=>target[key]||(()=>{}),set:(t,k,v)=>(t[k]=v,true)});
- function element(id){if(!elements.has(id))elements.set(id,{id,hidden:false,checked:true,open:false,dataset:{},style:{},classList:{add(){},remove(){}},listeners:{},addEventListener(type,fn){this.listeners[type]=fn;},setAttribute(){},getContext(){return context;},focus(){},showModal(){this.open=true;},close(){this.open=false;},querySelectorAll(){return [...(this.innerHTML||'').matchAll(/data-character="(\d+)"/g)].map(m=>{const b=element('char'+m[1]);b.dataset.character=m[1];return b;});}});return elements.get(id);}
+ function element(id){if(!elements.has(id))elements.set(id,{id,hidden:false,checked:true,open:false,dataset:{},style:{},classList:{add(){},remove(){}},listeners:{},addEventListener(type,fn){(this.listeners[type] ||= []).push(fn);},setAttribute(){},getContext(){return context;},focus(){},showModal(){this.open=true;},close(){this.open=false;},querySelectorAll(){return [...(this.innerHTML||'').matchAll(/data-character="(\d+)"/g)].map(m=>{const b=element('char'+m[1]);b.dataset.character=m[1];return b;});}});return elements.get(id);}
  const document={getElementById:element,createElement:()=>({width:0,height:0,getContext:()=>context}),querySelectorAll:()=>[],addEventListener:(k,f)=>handlers['doc:'+k]=f};
  const window={addEventListener:(k,f)=>handlers[k]=f};
  const sandbox={document,window,Path2D:class {moveTo(){}lineTo(){}closePath(){}},requestAnimationFrame:f=>raf=f,setInterval:()=>0,localStorage:{getItem:()=>null,setItem(){}},console};
  vm.runInNewContext(fs.readFileSync('dist/game.js','utf8'),sandbox);
  function tick(seconds){for(let n=0;n<Math.ceil(seconds*60);n++){time+=1000/60;raf(time);}}
  function key(code,down=true){handlers[down?'keydown':'keyup']({code,target:{matches:()=>false},preventDefault(){},repeat:false});}
- return {element,tick,key,state:()=>window.snowbell.getState(),click:id=>element(id).listeners.click({})};
+ return {element,tick,key,state:()=>window.snowbell.getState(),click:id=>element(id).listeners.click.forEach(fn=>fn({}))};
 }
 const h=harness();
 assert.equal(h.state().state,'select');
@@ -24,4 +24,5 @@ let collected=false;for(let i=0;i<180;i++){h.tick(.5);if(h.state().item){collect
 h.tick(100);assert.equal(h.state().state,'finished','three lap race finishes');assert(h.state().player.progress>=3);assert(h.state().player.finishTime>0);assert.equal(h.state().racers.length,6);assert(h.element('results').innerHTML.includes('YOU'),'result highlights player');h.click('again');assert.equal(h.state().state,'select');
 for(let i=0;i<6;i++){const race=harness();race.click('char'+i);race.click('start');race.tick(105);assert.equal(race.state().state,'finished','character '+i+' can finish all laps');assert.equal(race.state().selected,i);}
 console.log('PASS: six characters, countdown, acceleration, steering/drift turbo, pause/resume, gift collection/use, 3-lap finish, results, restart.');
+
 
