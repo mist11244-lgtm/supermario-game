@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b40">
+<meta name="description" content="눈 내리는 크리스마스 마을에서 즐기는 6인 아이스 카트 레이싱. 캐릭터를 고르고 스노벨 컵에 도전하세요!">
+<title>SNOWBELL CUP — 마리오 윈터 카트</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ctext y='48' font-size='48'%3E🏎️%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script src="game.js" defer></script>
+</head>
+<body>
+<div class="page">
+<header class="header"><a class="brand" href="./" aria-label="스노벨 컵 홈"><span class="brand-icon">✳</span> SNOWBELL<span class="brand-cup">CUP</span></a><nav><span class="season">WINTER SPECIAL · 2026</span><button id="sound" class="pill" aria-pressed="true">♫ 사운드 ON</button><button id="help" class="icon-btn" aria-label="게임 조작법">?</button></nav></header>
+<main>
+<section class="intro"><div><div class="eyebrow"><span></span> MARIO KART · CHRISTMAS EDITION</div><h1>추위는 잊고,<br class="mobile-break"> <em>신나게 달려!</em><span class="title-star">✧</span></h1><p>눈꽃이 반짝이는 트랙, 선물 같은 역전.<br class="mobile-break"> 올겨울의 챔피언은 바로 너!</p></div><div class="cup-mark"><span>❄</span><div>THE SNOWBELL CUP<small>6 RACERS · 3 LAPS · 1 CHAMPION</small></div></div></section>
+<div class="arena-layout">
+<section class="game-shell" aria-label="카트 레이싱 게임">
+<div class="track-bar"><span><i class="live-dot"></i> <b>01</b> 프로스티 빌리지 <small>FROSTY VILLAGE</small></span><span class="weather">❄ −8°C <span>맑음 · 눈 조금</span></span></div>
+<div class="canvas-wrap" id="game-area"><canvas id="game" width="1120" height="700" tabindex="0" aria-label="얼음 트랙. 좌우 방향키로 조향, Shift 드리프트, Space 아이템, P 일시정지"></canvas>
+<div class="hud" id="hud"><div class="position"><strong id="position">6<span>th</span></strong><small>POSITION</small></div><div class="hud-right"><div><small>LAP</small><b id="lap">1 <span>/ 3</span></b></div><div><small>TIME</small><b id="timer">00:00.00</b></div><button id="pause" class="pause" aria-label="일시정지">Ⅱ</button></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div class="race-bottom" id="race-bottom"><div class="speed"><strong id="speed">0</strong><span>km/h</span><div class="speed-line"><i id="speed-fill"></i></div></div><div class="drift-meter"><span>DRIFT BOOST</span><div><i id="drift-fill"></i></div></div><button class="item-slot" id="item" aria-label="아이템 사용"><span id="item-icon">?</span><small id="item-label">선물 상자를 모으세요</small><kbd>SPACE</kbd></button></div>
+<div class="overlay" id="start-screen"><div class="start-badge">✦ THE WINTER GRAND PRIX ✦</div><h2>작은 카트,<br><span>커다란 겨울 모험.</span></h2><p>좋아하는 레이서를 골라 출발하세요.</p><button class="start-btn" id="start">레이스 시작 <span>→</span></button><div class="start-note">3바퀴 경쟁 · 자동 가속 · 아이템 배틀</div></div>
+<div class="overlay modal-panel" id="pause-screen" hidden><div class="start-badge">TAKE A SNOW BREAK</div><h2>잠깐, 눈사람 타임 ☃</h2><p>준비되면 다시 트랙으로 돌아오세요.</p><button class="start-btn" id="resume">계속 달리기 →</button><button class="text-btn" id="restart">캐릭터 다시 고르기</button></div>
+<div class="overlay modal-panel" id="finish-screen" hidden><div class="start-badge">THE SNOWBELL CUP · FINISH</div><h2 id="finish-title">멋진 레이스!</h2><p id="finish-description"></p><ol id="results"></ol><button class="start-btn" id="again">한 번 더 달리기 ↗</button></div>
+<div id="countdown" class="countdown" hidden></div>
+<div class="mobile-controls" id="mobile-controls"><button data-key="ArrowLeft" aria-label="왼쪽">◀</button><button data-key="ArrowRight" aria-label="오른쪽">▶</button><button data-key="Shift" class="touch-drift">DRIFT</button><button id="touch-item">🎁</button></div>
+</div>
+<div class="game-footer"><span><i></i> <span id="game-status">선발 그리드에서 기다리는 중</span></span><button id="fullscreen" aria-label="게임 화면 전체화면">⛶ <span>전체화면</span></button></div>
+</section>
+<aside class="sidebar"><section class="racer-panel"><div class="panel-heading"><h2 id="racer-heading">레이서를 선택하세요</h2><span>06</span></div><p class="panel-description" id="panel-description">저마다 다른 매력, 같은 우승의 꿈.</p><div class="racers" id="racers"></div></section><section class="circuit-card"><div class="circuit-top"><span>THIS CIRCUIT</span><span>❄</span></div><h3>Frosty Village</h3><p>미끄러지는 얼음 위, 짜릿한 한 바퀴.</p><div class="circuit-stats"><div><strong>3</strong><span>바퀴</span></div><div><strong>6</strong><span>레이서</span></div><div><strong>∞</strong><span>재미</span></div></div></section></aside>
+</div>
+<section class="control-strip"><span class="control-title">HOW TO PLAY <small>초보 레이서도 바로 출발!</small></span><div><kbd>←</kbd><kbd>→</kbd><span>좌우 조향</span></div><div><kbd>SHIFT</kbd><span>꾹 눌러 드리프트</span></div><div><kbd>SPACE</kbd><span>아이템 사용</span></div><div><kbd>P</kbd><span>일시정지</span></div><label class="auto-label"><input id="auto" type="checkbox" checked> 자동 가속</label></section>
+<div class="tip-line"><span>✦ RACER'S TIP</span><p>선물 상자를 잡아 아이템을 얻고, 드리프트를 충전해 부스터로 앞질러 보세요!</p><span>HAPPY RACING!</span></div>
+</main><footer class="footer"><span>MADE FOR A LITTLE WINTER JOY.</span><span>비공식 팬 게임 · Nintendo와 무관한 팬 프로젝트</span><span>❄ &nbsp; HAVE A MERRY RACE</span></footer>
+</div>
+<dialog id="help-dialog"><button id="close-help" aria-label="도움말 닫기">×</button><div class="eyebrow">WELCOME, RACER!</div><h2>작은 겨울 레이싱 가이드</h2><p>6명의 레이서와 3바퀴를 달려 먼저 결승선을 통과하세요. 트랙을 따라 자동으로 전진하므로 좌우로 차선을 바꾸면 됩니다.</p><ul><li><b>← → / A D</b> 차선 이동. 얼음에서는 관성이 남아요.</li><li><b>↑ / W · ↓ / S</b> 가속 · 브레이크. 자동 가속을 끄면 직접 가속하세요.</li><li><b>Shift</b> 누르고 조향하면 드리프트 충전! 놓으면 미니 터보가 발동해요.</li><li><b>Space / 선물 버튼</b> 아이템 사용. 버섯은 가속, 별은 무적, 얼음은 상대 감속, 등껍질은 앞선 상대 공격!</li><li><b>P / Esc</b> 일시정지. 스마트폰에서는 화면 아래 터치 버튼을 사용하세요.</li></ul><p>🎁 선물은 한 바퀴마다 다시 등장합니다. 동전을 모으면 최고속도가 조금씩 올라가요. 푸른 얼음 구간에서는 조향을 조심하세요!</p><button class="start-btn" id="help-ok">알겠어요!</button></dialog>
+</body></html>
